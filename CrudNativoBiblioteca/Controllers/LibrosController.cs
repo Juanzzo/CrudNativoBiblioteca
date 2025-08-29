@@ -35,10 +35,18 @@ namespace CrudNativoBiblioteca.Controllers
                         _context.Libros.Add(libro);
                         _context.SaveChanges();
 
+                TempData["Mensaje"] = " Libro Registrado Con Exito ";
+
                         return RedirectToAction("Index");
                     }
                     return View();
             }
+
+        //Http Get Edit
+        public IActionResult Edit(int? id)
+        {
+            if ( id==)
+        }
     }
 }
 

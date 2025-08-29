@@ -16,7 +16,6 @@ namespace CrudNativoBiblioteca.Models
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El campo es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El {0} debe ser al menos {2} y maximo {1} caracteres", MinimumLength = 3)]
         [DataType(DataType.Date)]
         public DateTime FechaLanzamiento { get; set; }
 
