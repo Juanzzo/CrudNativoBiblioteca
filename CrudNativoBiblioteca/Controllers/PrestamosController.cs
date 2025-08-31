@@ -1,4 +1,4 @@
-using CrudNativoBiblioteca.Data;
+ï»¿using CrudNativoBiblioteca.Data;
 using CrudNativoBiblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -36,19 +36,24 @@ namespace CrudNativoBiblioteca.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Prestamo prestamo)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Prestamo prestamo)
         {
             if (ModelState.IsValid)
             {
                 _context.Prestamos.Add(prestamo);
-                _context.SaveChanges();
-                TempData["Mensaje"] = "Préstamo registrado con éxito";
-                return RedirectToAction("Index");
+                await _context.SaveChangesAsync();
+
+                // âœ… AquÃ­ aseguramos que se vaya al listado
+                return RedirectToAction(nameof(Index));
             }
+
+            // Si falla la validaciÃ³n, volvemos a cargar los combos
             ViewBag.Libros = new SelectList(_context.Libros, "Id", "Titulo", prestamo.LibroId);
             ViewBag.Usuarios = new SelectList(_context.Usuarios, "Id", "Nombre", prestamo.UsuarioId);
+
             return View(prestamo);
-        }
+        }   
 
         public IActionResult Edit(int? id)
         {
@@ -73,7 +78,7 @@ namespace CrudNativoBiblioteca.Controllers
             {
                 _context.Prestamos.Update(prestamo);
                 _context.SaveChanges();
-                TempData["Mensaje"] = "Préstamo editado con éxito";
+                TempData["Mensaje"] = "PrÃ©stamo editado con Ã©xito";
                 return RedirectToAction("Index");
             }
             ViewBag.Libros = new SelectList(_context.Libros, "Id", "Titulo", prestamo.LibroId);
@@ -105,7 +110,7 @@ namespace CrudNativoBiblioteca.Controllers
             }
             _context.Prestamos.Remove(prestamo);
             _context.SaveChanges();
-            TempData["Mensaje"] = "Préstamo eliminado con éxito";
+            TempData["Mensaje"] = "PrÃ©stamo eliminado con Ã©xito";
             return RedirectToAction("Index");
         }
     }
