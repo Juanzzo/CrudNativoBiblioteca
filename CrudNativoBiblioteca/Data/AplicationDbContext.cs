@@ -10,5 +10,7 @@ namespace CrudNativoBiblioteca.Data
         {
         }
         public DbSet<Libro> Libros { get; set; } //Representa una coleccion de todas las entidades en el contexto o que pueden ser consultadas desde la base de datos
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Prestamo> Prestamos { get; set; }
     }
 }

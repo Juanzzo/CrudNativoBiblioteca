@@ -45,7 +45,30 @@ namespace CrudNativoBiblioteca.Controllers
         //Http Get Edit
         public IActionResult Edit(int? id)
         {
-            if ( id==)
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var libro = _context.Libros.Find(id);
+            if (libro == null)
+            {
+                return NotFound();
+            }
+            return View(libro);
+        }
+
+        //Http Post Edit
+        [HttpPost]
+        public IActionResult Edit(Libro libro)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Libros.Update(libro);
+                _context.SaveChanges();
+                TempData["Mensaje"] = "Libro editado con éxito";
+                return RedirectToAction("Index");
+            }
+            return View(libro);
         }
     }
 }
